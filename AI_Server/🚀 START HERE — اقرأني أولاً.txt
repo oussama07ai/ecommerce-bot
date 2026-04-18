@@ -1,0 +1,117 @@
+════════════════════════════════════════════════════════════
+  🚀 دليل الإعداد السريع — 3 خطوات فقط
+════════════════════════════════════════════════════════════
+
+الكود جاهز 100%. أنت تحتاج فقط 3 مفاتيح API ثم تنشر السيرفر.
+المدة المتوقعة: 20-30 دقيقة
+
+════════════════════════════════════════════════════════════
+  الخطوة 1: Claude API Key (5 دقائق)
+════════════════════════════════════════════════════════════
+
+1. اذهب إلى: https://console.anthropic.com
+2. أنشئ حساباً بإيميلك
+3. من القائمة الجانبية → "API Keys"
+4. انقر "Create Key" → اسمه: ecommerce
+5. انسخ المفتاح (يبدأ بـ sk-ant-...)
+6. اشحن رصيداً $10 من "Billing" (يكفي لآلاف الرسائل)
+
+→ افتح ملف .env وضع المفتاح في:
+  ANTHROPIC_API_KEY=sk-ant-api03-...
+
+════════════════════════════════════════════════════════════
+  الخطوة 2: WhatsApp + Instagram API (10 دقائق)
+════════════════════════════════════════════════════════════
+
+لديك WhatsApp Business ✅ — نحتاج نربطه بالـ API:
+
+أ) أنشئ حساب Meta Developer:
+   → اذهب إلى: https://developers.facebook.com
+   → انقر "Get Started" وسجل بحساب Facebook
+
+ب) أنشئ تطبيق جديد:
+   → My Apps → Create App
+   → اختر "Business"
+   → اكتب اسم التطبيق: ecommerce-bot
+
+ج) أضف WhatsApp:
+   → Add Product → WhatsApp → Set Up
+   → ستجد "Temporary Access Token" (انسخه)
+   → ستجد "Phone Number ID" (انسخه)
+
+د) أضف Instagram:
+   → Add Product → Messenger → Set Up
+   → نفس الـ Access Token يعمل للاثنين
+
+→ افتح ملف .env وضع:
+  WHATSAPP_ACCESS_TOKEN=EAAxxxxx...
+  WHATSAPP_PHONE_NUMBER_ID=123456789
+  INSTAGRAM_ACCESS_TOKEN=EAAxxxxx...
+  WHATSAPP_VERIFY_TOKEN=كلمة_سرية_تختارها
+  INSTAGRAM_VERIFY_TOKEN=كلمة_سرية_تختارها
+
+════════════════════════════════════════════════════════════
+  الخطوة 3: Google Sheets (10 دقائق)
+════════════════════════════════════════════════════════════
+
+أ) ارفع الملف:
+   → ارفع CRM_ECommerce_AI_Flow.xlsx إلى Google Drive
+   → افتحه كـ Google Sheets
+   → من الرابط انسخ الـ ID (بين /d/ و /edit)
+
+ب) أنشئ Service Account:
+   → اذهب إلى: https://console.cloud.google.com
+   → أنشئ مشروع جديد: ecommerce-bot
+   → من APIs → Enable: Google Sheets API + Google Drive API
+   → من Credentials → Create Service Account
+   → اسمه: ecommerce-sheets
+   → Create and Continue → Done
+   → انقر على الـ Service Account → Keys → Add Key → JSON
+   → ستُحمَّل ملف JSON → احفظه باسم: service_account.json
+   → ضعه في مجلد AI_Server/
+
+ج) شارك الـ Sheets:
+   → افتح ملف service_account.json
+   → انسخ قيمة "client_email" (مثل: xxx@xxx.iam.gserviceaccount.com)
+   → في Google Sheets → Share → الصق الإيميل → Editor → Send
+
+→ افتح ملف .env وضع:
+  GOOGLE_SHEETS_ID=ID الذي نسخته من الرابط
+  GOOGLE_SERVICE_ACCOUNT_JSON=service_account.json
+
+════════════════════════════════════════════════════════════
+  الخطوة 4: نشر السيرفر على Railway (5 دقائق)
+════════════════════════════════════════════════════════════
+
+1. اذهب إلى: https://railway.app وسجل بـ GitHub
+2. New Project → Deploy from GitHub Repo
+3. ارفع مجلد AI_Server على GitHub أولاً:
+   → أنشئ حساب github.com
+   → New Repository → ecommerce-bot → اسحب المجلد وأفلته
+4. في Railway اختر الـ repo
+5. من Variables → أضف كل متغيرات .env
+6. انتظر الـ deploy (2-3 دقائق) ✅
+
+════════════════════════════════════════════════════════════
+  الخطوة 5: ربط Webhooks (آخر خطوة)
+════════════════════════════════════════════════════════════
+
+بعد الـ deploy ستحصل على رابط مثل:
+https://ecommerce-bot-production.up.railway.app
+
+→ في Meta Developer → WhatsApp → Configuration:
+  Callback URL: https://YOUR-APP.railway.app/webhook/whatsapp
+  Verify Token: نفس WHATSAPP_VERIFY_TOKEN في .env
+
+→ في Meta Developer → Messenger → Settings:
+  Callback URL: https://YOUR-APP.railway.app/webhook/instagram
+  Verify Token: نفس INSTAGRAM_VERIFY_TOKEN في .env
+
+════════════════════════════════════════════════════════════
+  ✅ انتهى! السيرفر يعمل الآن 24/7
+════════════════════════════════════════════════════════════
+
+لاحقاً: اكتب للمساعد "عندي المفاتيح" وسيساعدك في
+        ملء .env وإكمال الإعداد خطوة بخطوة.
+
+📧 أي مشكلة → أخبر المساعد بالخطأ وسيحله فوراً.
