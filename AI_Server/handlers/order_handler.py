@@ -8,7 +8,7 @@ from services.sheets_service import (
         add_order, upsert_customer, log_ai_interaction
 )
 from services.messaging_service import send_whatsapp, send_instagram_dm, alert_agent
-from prompts.all_prompts import get_support_prompth
+from prompts.all_prompts import get_support_prompt
 from config import settings
 
 logger = logging.getLogger(__name__)
