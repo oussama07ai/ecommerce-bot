@@ -3,11 +3,12 @@
 """
 import logging
 from services.claude_service import ask_claude
+from services.shopify_service import get_shopify_products_as_text
 from services.sheets_service import (
-    get_products_as_text, add_order, upsert_customer, log_ai_interaction
+        add_order, upsert_customer, log_ai_interaction
 )
 from services.messaging_service import send_whatsapp, send_instagram_dm, alert_agent
-from prompts.all_prompts import get_support_prompt
+from prompts.all_prompts import get_support_prompth
 from config import settings
 
 logger = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ async def handle_message(platform: str, sender_id: str, message_text: str,
         return
 
     # جلب المنتجات
-    products_text = get_products_as_text()
+            products_text = await get_shopify_products_as_text()
 
     # بناء الـ prompt
     system_prompt = get_support_prompt(settings.STORE_NAME, products_text)
