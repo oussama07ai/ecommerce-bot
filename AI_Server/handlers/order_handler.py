@@ -44,7 +44,7 @@ async def handle_message(platform: str, sender_id: str, message_text: str,
         return
 
     # جلب المنتجات
-            products_text = await get_shopify_products_as_text()
+        products_text = await get_shopify_products_as_text()
 
     # بناء الـ prompt
     system_prompt = get_support_prompt(settings.STORE_NAME, products_text)
